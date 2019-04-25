@@ -62,7 +62,7 @@ check_makefile() {
 }
 
 change_files() {
-  sed -e s/"files=.*$"/"files="$@""/1 "./Makefile" >tmp
+  sed -e s/"files=.*$"/"files=$@"/1 "./Makefile" >tmp
   mv tmp Makefile
   echo "Files in a Makefile were changed to:"
   cat Makefile | head -n 1
@@ -95,7 +95,7 @@ if [[ "$1" =~ --files ]] || [[ "$1" =~ -f ]]; then
 fi
 
 if [[ "$1" =~ --bash ]]; then
-  docker run -ti -v $PWD:/test mem-check bash
+  docker run -ti -v $PWD:/test $DOCKER_IMAGE bash
   exit 0
 fi
 
